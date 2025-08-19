@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000; /* Black background */
+            color: #ffffff; /* White text */
+            text-align: center;
+        }
+        header {
+            background-color: #ffffff; /* White header background */
+            color: #000000; /* Black text */
+            padding: 1em 0;
+            display: flex;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap; /* Allow wrapping for smaller screens */
+            position: relative;
+        }
+        header img {
+            height: 60px;
+            width: auto;
+            margin: 0.5em 1em;
+            /* position: absolute; */
+            left: 10px; /* Position the logo on the left */
+        }
+        header h1 {
+            margin: 0.5em 0;
+            /* flex-grow: 1; */
+            text-align: center;
+        }
+        .search-container {
+            margin: 1em auto;
+            text-align: center;
+        }
+        .search-input {
+            width: 90%; /* Adjust width for better responsiveness */
+            max-width: 500px;
+            padding: 0.8em;
+            font-size: 1.1em;
+            border: 2px solid #ffffff;
+            border-radius: 8px;
+            color: #000000;
+        }
+        .test-list {
+            margin: 2em auto;
+            width: 95%;
+            max-width: 1000px;
+            padding: 1.5em;
+            background: #000000; /* Black container background */
+            border: 2px solid #ffffff; /* White border */
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        .test-item {
+            display: none; /* Hide by default for pagination */
+            justify-content: space-between;
+            align-items: flex-start; /* Adjust alignment */
+            font-size: 1.1em; /* Slightly smaller font size */
+            padding: 1em;
+            margin: 1em 0;
+            border-bottom: 1px solid #ffffff;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            text-align: left;
+            position: relative;
+            flex-wrap: wrap; /* Allow wrapping for smaller screens */
+        }
+        .test-item:last-child {
+            border-bottom: none;
+        }
+        .test-item:hover {
+            background-color: #ffffff; /* White on hover */
+            color: #000000; /* Black text on hover */
+        }
+        a {
+            text-decoration: none;
+            color: #ffffff;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #000000;
+        }
+        .content {
+            flex: 1;
+        }
+        .syllabus {
+            font-size: 1em;
+            margin-top: 0.5em;
+            color: #cccccc;
+        }
+        .start-btn {
+            display: inline-block;
+            padding: 0.8em 2em;
+            background-color: #ffffff;
+            color: #000000;
+            font-size: 1em;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+        .start-btn:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 2em 0;
+        }
+        .page-number {
+            margin: 0 0.5em;
+            cursor: pointer;
+            font-size: 1.2em;
+            padding: 0.5em 1em;
+            border: 1px solid #ffffff;
+            border-radius: 5px;
+            background-color: #000000;
+            color: #ffffff;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .page-number.active {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        .page-number:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+            }
+            .test-item {
+                font-size: 1em;
+                padding: 1em;
+                margin: 1em 0;
+            }
+            .start-btn {
+                margin-top: 1em;
+                width: 100%;
+            }
+        }
+        @media (max-width: 480px) {
+            .search-input {
+                width: 100%;
+                font-size: 1em;
+            }
+            .test-item {
+                font-size: 0.9em;
+                padding: 0.8em;
+            }
+            .start-btn {
+                padding: 0.5em 1em;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img 
+            src="https://firebasestorage.googleapis.com/v0/b/mentorsmantratestportal1.appspot.com/o/LOGO%2F20250112_113316.png?alt=media&token=e4e11a7e-4dc1-436b-b01c-cd6d44ece7e4" 
+            alt="Logo"
+        />
+        <h1>infinitest</h1>
+    </header>
+    <div class="search-container">
+        <input
+            type="text"
+            id="search"
+            class="search-input"
+            placeholder="Search by test name or topics..."
+            oninput="filterTests()"
+        />
+    </div>
+    <div id="testList" class="test-list">
+         <div class="test-item">
+            <div class="content">
+                Test 33
+                <div class="syllabus">
+                    M-: Limits, continuity and differentiability<br>
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/JEE-23/" target="_blank" class="start-btn">Start Test</a>
+        </div>
+         <div class="test-item">
+            <div class="content">
+                Test 32
+                <div class="syllabus">
+                    P-: NLM, Magnetism<br>
+                    C-: IUPAC, Chemical Bonding, Chemical Kinetics<br>
+                    M-: Sequence and series, Limits continuity and differentiability<br>
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/JEE-22/" target="_blank" class="start-btn">Start Test</a>
+        </div>
+         <div class="test-item">
+            <div class="content">
+                Test 31
+                <div class="syllabus">
+                    P-: Nlm<br>
+                    C-: Mole concept<br>
+                    M-: ITF<br>
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/JEE-21/" target="_blank" class="start-btn">Start Test</a>
+        </div>
+         <div class="test-item">
+            <div class="content">
+                Test 30
+                <div class="syllabus">
+                    P-: Work power and energy<br>
+                    C-: Chemical kinetics<br>
+                    M-: Quadratic equation<br>
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/JEE-20./" target="_blank" class="start-btn">Start Test</a>
+        </div>
+         <div class="test-item">
+            <div class="content">
+                Test 29
+                <div class="syllabus">
+                    P-: Circular motion<br>
+                    C-: Solution<br>
+                    M-: Basic maths and log<br>
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/JEE-19/" target="_blank" class="start-btn">Start Test</a>
+        </div>
+         <div class="test-item">
+            <div class="content">
+                Test 28
+                <div class="syllabus">
+                    P-: Modern Physics<br>
+                    C-: Alcohol Phenol and ether<br>
+                    M-: Limits<br>
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/JEE-18/" target="_blank" class="start-btn">Start Test</a>
+        </div>
+         <div class="test-item">
+            <div class="content">
+                Test 27
+                <div class="syllabus">
+                    P-: Current electricity<br>
+                    C-: Goc<br>
+                    M-: Function<br>
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/JEE-17/" target="_blank" class="start-btn">Start Test</a>
+        </div>
+           <div class="test-item">
+            <div class="content">
+                Test 26
+                <div class="syllabus">
+                    P-: EMI<br>
+                    C-: Hydrocarbon<br>
+                    M-: Function<br>
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/JEE-16/" target="_blank" class="start-btn">Start Test</a>
+        </div>
+        <div class="test-item">
+            <div class="content">
+                Test 25
+                <div class="syllabus">
+                    P-: Kinematics,Ray optics<br>
+                    C-: Mole concept, Redox Reaction, IUPAC, Goc<br>
+                    M-: Basic maths and log, Trigonometry<br>
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/JEE-15/" target="_blank" class="start-btn">Start Test</a>
+        </div>
+        <div class="test-item">
+            <div class="content">
+                Test 24
+                <div class="syllabus">
+                    P-: Capacitor<br>
+                    C-: Isomerism<br>
+                    M-: Vector and 3d geometry<br>
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/JEE-13/" target="_blank" class="start-btn">Start Test</a>
+        </div>
+        <div class="test-item">
+            <div class="content">
+                Test 23
+                <div class="syllabus">
+                    P-: Capacitor<br>
+                    C-: Chemical equilibrium<br>
+                    M-: Sequences and series<br>
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/JEE-12/" target="_blank" class="start-btn">Start Test</a>
+        </div>
+        <div class="test-item">
+            <div class="content">
+                Test 22
+                <div class="syllabus">
+                    P-: Nlm<br>
+                    C-: Redox reaction<br>
+                    M-: Basic maths and log<br>
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/JEE-06/" target="_blank" class="start-btn">Start Test</a>
+        </div>
+        <div class="test-item">
+            <div class="content">
+                Test 21
+                <div class="syllabus">
+                    P-: Nlm<br>
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/JEE-11/" target="_blank" class="start-btn">Start Test</a>
+        </div>
+        <div class="test-item">
+            <div class="content">
+                Test 20
+                <div class="syllabus">
+                    P-: ray optics<br>
+                    C-: Goc<br>
+                    M-: binomial<br>
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/JEE-10/" target="_blank" class="start-btn">Start Test</a>
+        </div>
+        <div class="test-item">
+            <div class="content">
+                Test 19
+                <div class="syllabus">
+                    C-: IUPAC<br>
+                    P-: Electrostatics<br>
+                    M-: Quadratic equation<br>
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/JEE-09/" target="_blank" class="start-btn">Start Test</a>
+        </div>
+        <div class="test-item">
+            <div class="content">
+                Test 18
+                <div class="syllabus">
+                    P-: Kinematics<br>
+                    C-: Redox Reaction<br>
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/JEE-08/" target="_blank" class="start-btn">Start Test</a>
+        </div>
+        <div class="test-item">
+            <div class="content">
+                Test 17
+                <div class="syllabus">
+                    P-: Current electricity, Electrostatics<br>
+                    C-: Atomic structure, Mole concept<br>
+                    M-: Quadratic Equation, Trigonometry<br>
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/JEE07/" target="_blank" class="start-btn">Start Test</a>
+        </div>
+        <div class="test-item">
+            <div class="content">
+                Test 16
+                <div class="syllabus">
+                    C-: Coordination compound
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/JEE-04/" target="_blank" class="start-btn">Start Test</a>
+        </div>
+        <div class="test-item">
+            <div class="content">
+                Test 15
+                <div class="syllabus">
+                    P-: Electrostatics<br>  
+                    C-: Mole concept<br>
+                    M-: Trigonometry
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/JEE-03/" target="_blank" class="start-btn">Start Test</a>
+        </div>
+        <div class="test-item">
+            <div class="content">
+                Test 14
+                <div class="syllabus">
+                    M-: Straight line
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/JEE-02/" target="_blank" class="start-btn">Start Test</a>
+        </div>
+        <div class="test-item">
+            <div class="content">
+                Test 13
+                <div class="syllabus">
+                    P-: Kinematics<br>
+                    C-: Mole concept<br>
+                    M-: Basic maths and log
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/JEE-01/" target="_blank" class="start-btn">Start Test</a>
+        </div>
+        <div class="test-item">
+            <div class="content">
+                Test 12
+                <div class="syllabus">
+                    C-: Physical chemistry full syllabus<br>
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/physicalfulltest02/" target="_blank" class="start-btn">Start Test</a>
+        </div>
+        <div class="test-item">
+            <div class="content">
+                Test 11
+                <div class="syllabus">
+                    P-: Ac, electromagnetic waves, capacitor, current electricity, optics<br>
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/Acemwcapacitorcurrentelectricityoptics/" target="_blank" class="start-btn">Start Test</a>
+        </div>
+        <div class="test-item">
+            <div class="content">
+                Test 10
+                <div class="syllabus">
+                    P-: Jee main full syllabus<br>
+                    C-: Jee main full syllabus<br>
+                    M-: Jee main full syllabus
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/Full-test-6./" target="_blank" class="start-btn">Start Test</a>
+        </div>
+        <div class="test-item">
+            <div class="content">
+                Test 9
+                <div class="syllabus">
+                    P-: Jee main full syllabus<br>
+                    C-: Jee main full syllabus<br>
+                    M-: Jee main full syllabus
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/full-test-5/" target="_blank" class="start-btn">Start Test</a>
+        </div>
+        <div class="test-item">
+            <div class="content">
+                Test 8
+                <div class="syllabus">
+                    P-: Ray optics, ac, wave optics <br>
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/Rayopticsasiwaveoptics/" target="_blank" class="start-btn">Start Test</a>
+        </div>
+        <div class="test-item">
+            <div class="content">
+                Test 7
+                <div class="syllabus">
+                    P-: Jee main full syllabus<br>
+                    C-: Jee main full syllabus<br>
+                    M-: Jee main full syllabus
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/Full-test-3./" target="_blank" class="start-btn">Start Test</a>
+        </div>
+        <div class="test-item">
+            <div class="content">
+                Test 6
+                <div class="syllabus">
+                    P-: Jee main full syllabus<br>
+                    C-: Jee main full syllabus<br>
+                    M-: Jee main full syllabus
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/Full-test-2./" target="_blank" class="start-btn">Start Test</a>
+        </div>
+        <div class="test-item">
+            <div class="content">
+                Test 5
+                <div class="syllabus">
+                    P-: Jee main full syllabus<br>
+                    C-: Jee main full syllabus<br>
+                    M-: Jee main full syllabus
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/FULL-TEST---1./" target="_blank" class="start-btn">Start Test</a>
+        </div>
+        <div class="test-item">
+            <div class="content">
+                Test 4
+                <div class="syllabus">
+                    C-: full Physical chemistry<br>
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/physicalfulltest/" target="_blank" class="start-btn">Start Test</a>
+        </div>
+        <div class="test-item">
+            <div class="content">
+                Test 3
+                <div class="syllabus">
+                    P-: Current, capacitor, electromagnetic waves<br>
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/Currentcapacitoremw/" target="_blank" class="start-btn">Start Test</a>
+        </div>
+        <div class="test-item">
+            <div class="content">
+                Test 2
+                <div class="syllabus">
+                    P-: magnetism and current<br>
+                    C-: ionic equilibrium<br>
+                    M-: probability<br>
+                    B-: plant kingdom
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/iat-test-25/" target="_blank" class="start-btn">Start Test</a>
+        </div>
+        <div class="test-item">
+            <div class="content">
+                Test 1
+                <div class="syllabus">
+                    P-: magnetism and current, Moving Charges and Magnetism<br>
+                    C-: ionic equilibrium, Chemical Equilibrium, Thermodynamics (excluding thermochemistry)<br>
+                    M-: probability, Matrices and Determinants, Straight lines<br>
+                    B-: plant kingdom, Evolution, Biodiversity and Conservation, Biotechnology Principles and Processes<br>
+                </div>
+            </div>
+            <a href="https://priyanshu85953.github.io/iat-test-25/" target="_blank" class="start-btn">Start Test</a>
+        </div>
+    </div>
+    <div id="pagination" class="pagination"></div>
+
+    <script>
+        const itemsPerPage = 5;
+        let currentPage = 1;
+
+        function renderPagination() {
+            const testItems = document.querySelectorAll(".test-item");
+            const totalPages = Math.ceil(testItems.length / itemsPerPage);
+
+            const pagination = document.getElementById("pagination");
+            pagination.innerHTML = "";
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageNumber = document.createElement("span");
+                pageNumber.classList.add("page-number");
+                pageNumber.textContent = i;
+                if (i === currentPage) {
+                    pageNumber.classList.add("active");
+                }
+                pageNumber.addEventListener("click", () => {
+                    currentPage = i;
+                    showPage();
+                });
+                pagination.appendChild(pageNumber);
+            }
+        }
+
+        function showPage() {
+            const testItems = document.querySelectorAll(".test-item");
+            testItems.forEach((item, index) => {
+                if (
+                    index >= (currentPage - 1) * itemsPerPage &&
+                    index < currentPage * itemsPerPage
+                ) {
+                    item.style.display = "flex";
+                } else {
+                    item.style.display = "none";
+                }
+            });
+            renderPagination();
+        }
+
+        function filterTests() {
+            const searchInput = document.getElementById("search").value.toLowerCase();
+            const testItems = document.querySelectorAll(".test-item");
+
+            testItems.forEach((item) => {
+                const contentText = item.querySelector(".content").textContent.toLowerCase();
+                const syllabusText = item.querySelector(".syllabus").textContent.toLowerCase();
+
+                if (contentText.includes(searchInput) || syllabusText.includes(searchInput)) {
+                    item.style.display = "flex";
+                } else {
+                    item.style.display = "none";
+                }
+            });
+        }
+
+        showPage(); // Initialize the first page
+    </script>
+</body>
+</html>
